@@ -1,4 +1,4 @@
-# Conexão IPE - Análise de Dados com R
+# Análise de Dados com R
 # Dr Carolina Correia
 # 27 e 28 de Novembro de 2025
 
@@ -252,23 +252,74 @@ ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
 # Não esqueça de salvar o script antes de fechar o RStudio
 # Não precisa salvar o workspace
 
-#### 0 Customizar gráficos ####
+#### 11 Customizar gráficos ####
 
-# Rótulos
+# Adicionar/mudar rótulos (labels) com a função labs()
+ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
+  geom_point(aes(color = especie, shape = especie)) +
+  facet_wrap(~ilha) +
+  labs(x = "Comprimento da nadadeira em milímetros",
+       y = "Massa corporal em gramas",
+       color = "Espécie",
+       shape = "Espécie",
+       title = "Pinguins",
+       subtitle = "Distribuição de três espécies de pinguins nas Ilhas Biscoe, Dream e Torgersen",
+       caption = "Dados da tabela pinguin, presente no pacote dados")
 
+# Mudar cores
+ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
+  geom_point(aes(color = especie, shape = especie)) +
+  scale_color_manual(values = c("black", "#E427F5", "blue")) + # Cores podem ser especificadas através do nome em inglês ou do código HEX
+  facet_wrap(~ilha) +
+  labs(x = "Comprimento da nadadeira em milímetros",
+       y = "Massa corporal em gramas",
+       color = "Espécie",
+       shape = "Espécie",
+       title = "Pinguins",
+       subtitle = "Distribuição de três espécies de pinguins nas Ilhas Biscoe, Dream e Torgersen",
+       caption = "Dados da tabela pinguin, presente no pacote dados")
 
-#### 0 Salvar gráfico em arquivo ####
+# Mudar tema estético
+ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
+  geom_point(aes(color = especie, shape = especie)) +
+  facet_wrap(~ilha) +
+  labs(x = "Comprimento da nadadeira em milímetros",
+       y = "Massa corporal em gramas",
+       color = "Espécie",
+       shape = "Espécie",
+       title = "Pinguins",
+       subtitle = "Distribuição de três espécies de pinguins nas Ilhas Biscoe, Dream e Torgersen",
+       caption = "Dados da tabela pinguin, presente no pacote dados") +
+  theme_linedraw()
 
-ggsave("engine_fuel_plot.png", # Name of the file to be created with the plot. You can also replace .png with .pdf
-       plot = mpg_plot, # Object name that points to the plot in the R environment
-       path = NULL, # If NULL, file you'll be save in your working directory. Otherwise, you can tell the function where to save it
-       width = 10, # Define the plot's width
-       height = 6, # Define the plot's height
-       units = "in", # Unit used for determining plot's size. Can also be "cm" or "mm"
-       dpi = 300, # High quality for printing
-       limitsize = FALSE) # Tell ggsave not to limit the size of the file
+#### 12 Exportar gráfico para arquivo de imagem PNG ####
 
-#### 14 Importar dados de arquivo .csv para o R ####
+# Passar o gráfico para um objeto
+pinguins_dist <- ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
+  geom_point(aes(color = especie, shape = especie)) +
+  facet_wrap(~ilha) +
+  labs(x = "Comprimento da nadadeira em milímetros",
+       y = "Massa corporal em gramas",
+       color = "Espécie",
+       shape = "Espécie",
+       title = "Pinguins",
+       subtitle = "Distribuição de três espécies de pinguins nas Ilhas Biscoe, Dream e Torgersen",
+       caption = "Dados da tabela pinguin, presente no pacote dados") +
+  theme_linedraw()
+
+# Salvar o gráfico em um arquivo de imagem .png
+ggsave("pinguins_distribuicao.png", # Nome do arquivo
+       plot = pinguins_dist, # Nome do objeto que contém o gráfico no ambiente do R
+       path = NULL, # NULL significa que o arquivo vai ser salvo na pasta do projeto (se você estiver com um projeto aberto). Você também pode definir a localização no seu computador, se quiser.
+       width = 10, # Defina a largura da imagem (unidade de medida abaixo)
+       height = 6, # Defina a altura da imagem (unidade de medida abaixo)
+       units = "in", # Defina a unidade de medida (in - inches, cm - centímetros, mm - milímetros, in - polegadas/inches) 
+       dpi = 300, # Defina a qualidade da imagem em pontor por polegada (dpi - dots per inch). 300 dpi é o mínimo de resolução para imprimir o gráfico com qualidade.
+       limitsize = FALSE) # Diga à função ggsave() para não limitar o tamanho do arquivo ao salvar
+
+# Veja que o arquivo pinguins_distribuicao.png aparece na aba files/arquivos (caso você esteja no projeto)
+
+#### 13 Importar dados de arquivo .csv para o R ####
 
 # Vamos usar o pacote readr, que faz parte do tidyverse
 
@@ -304,7 +355,7 @@ View(estudantes)
 
 # Fechar aba
 
-#### 15 Importar dados de arquivo .xlsx para o R ####
+#### 14 Importar dados de arquivo .xlsx para o R ####
 
 # Primeiro, você precisa fazer o download da planilha de Excel que vamos usar:
 # https://github.com/cienciadedatos/pt-r4ds/raw/traducao-pt-2ed/data/estudantes.xlsx
@@ -349,7 +400,7 @@ estudantes <- read_excel("estudantes.xlsx",
 # Vamos ver os dados
 estudantes
 
-#### 16 Organizar dados: renomear colunas ####
+#### 15 Organizar dados: renomear colunas ####
 
 # Os nomes das colunas estão com formato inconsistente
 estudantes
@@ -383,7 +434,7 @@ View(estudantes)
 # Note que algumas observações no conjunto de dados estudantes
 # precisam ser transformadas. Vamos ver isso na proxima seção
 
-#### 17 Organizar dados: pivotar, exemplo simples ####
+#### 16 Organizar dados: pivotar, exemplo simples ####
 
 # Vamos criar um conjunto de dados bem simples com a função tribble()
 # do pacote tibble (pertence ao tidyverse, então já foi instalada)
@@ -416,7 +467,7 @@ df |> # Cmd ou Ctrl Shift M é o atalho de teclado para o pipe nativo
 df
 View(df)
 
-#### 18 Organizar dados: pivotar, exemplo mais complexo ####
+#### 17 Organizar dados: pivotar, exemplo mais complexo ####
 
 # Como pivotar quando temos muitas variáveis nos nomes de colunas:
 
@@ -444,7 +495,7 @@ unique(dados_oms_tidy$contagem)
 # Separar os valores da coluna genoro_idade é um processo mais avançado
 # Infelizmente não temos tempo neste curso
 
-#### 19 Transformar dados ####
+#### 18 Transformar dados ####
 
 # Vamos usar um conjunto de dados do pacote dados: vôos que partiram de Nova York em 2013
 ?voos
@@ -536,5 +587,17 @@ total_TB_ano <- tabela1 |>
 total_TB_ano
 
 
-#### 0 Salvar dados organizados e transformados em arquivo ####
+#### 19 Exportar dados (organizados e transformados) para arquivo CSV ou Excel ####
+
+total_TB_ano
+
+# Exportar como arquivo .csv
+write_csv(total_TB_ano, "total_TB_ano.csv")
+
+# Exportar como arquivo de Excel
+write_xlsx(total_TB_ano, "total_TB_ano.xlsx")
+
+
+
+
 
