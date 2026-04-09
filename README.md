@@ -1,4 +1,4 @@
-Script para curso de R 2025.
+Script para curso de R 2026.
 
 Exercícios extraídos do livro:
 R para Ciência de Dados (2ª edição)
