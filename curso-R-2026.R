@@ -1,11 +1,12 @@
 # Análise de Dados com R
 # Dr Carolina Correia
-# 10 e 11 de Abril de 2026
+# 18 e 19 de setembro de 2026
 
 # Exercícios foram extraídos do livro
 # R para Ciência de Dados (2ª edição)
 # Autores: Hadley Wickham, Mine Çetinkaya-Rundel, e Garrett Grolemund.
-# https://pt.r4ds.hadley.nz
+# https://r4ds.hadley.nz (Inglês)
+# https://pt.r4ds.hadley.nz (Português)
 
 
 # Isto é um comentário.
@@ -15,7 +16,8 @@
 # Um script é um arquivo de texto
 
 # A ordem dos comandos é importante
-# O R vai executar os comandos linha por linha, do topo para final do arquivo
+# O R vai executar os comandos linha por linha,
+# do topo para o final do arquivo
 
 
 #### 01 Setup/Configurações ####
@@ -34,52 +36,63 @@
 
 #### 02 Princípios básicos de programação ####
 
-# Para executar o código, mova o cursor do mouse para a linha desejada e
-# pressione as teclas:
+# Para executar o código, mova o cursor do mouse
+# para a linha desejada e pressione as teclas:
 # Ctrl, Enter no Windows ou Linux
 # Cmd, Enter no macOS
 # Uma outra maneira é clicar no botão 'Run' acima
 
 # Você pode usar o R para fazer cálculos básicos:
 1 / 200 * 30
-# Note que o separador decimal no resultado que aparece no console
-# é um ponto, não uma vírgula
+# Note que o separador decimal no resultado que
+# aparece no console é um ponto, não uma vírgula.
 
-# Precisa esperar que o símbolo > apareça no console antes de executar
-# o próximo comando. Normalmente é tão rápido que você nem nota
+# Precisa esperar que o símbolo > apareça no console
+# antes de executar o próximo comando.
+# Normalmente é tão rápido que você nem nota.
 
 20 + 20
 
 sin(pi / 2) # Calcular o seno de π (pi)
-# Note que os dois parenteses saã adicionados automaticamente,
-# o RStudio faz isso para você
+# Note que os dois parenteses são adicionados
+# automaticamente, o RStudio faz isso para você.
 
 # Existem 3 maneiras de definir variáveis/objetos no R:
-x <- 3 * 4 # Esta é a maneira recomendada, usando o formato: variável <- valor
-x = 1
-2 -> x # Esse tipo de atribuição pode ser usada ao final de um encadeamento ou no ggplot
+x <- 3 * 4 # 1) Esta é a maneira recomendada, usando o formato:
+# variável/objeto <- valor
+
+x = 1 # 2) Melhor evitar usar esta maneira de atribuir
+
+2 -> x # 3) Esse tipo de atribuição é melhor ser usada ao
+# final de um encadeamento ou ao final de um no ggplot
+
 y <- 3
 
-# Note que o valor de x não é impresso, ele é apenas armazenado
+# Note que o valor de x não é mostrado no console,
+# ele é armazenado no objeto x
 # O objeto 'x' recebe o valor 12
-# Se você quiser ver o valor, digite 'x' no console ou execute 'x' no script
+# Se você quiser ver o valor, digite 'x' no console
+# ou execute 'x' no script abaixo
 x
 
 x + y
-
 # Note que o ambiente agora mostra 'x' e o seu valor
 
-# Para atribuir um valor de texto, precisamos colocar o texto entre aspas
+# Para atribuir um valor de texto,
+# precisamos colocar o texto entre aspas:
 x <- "olá mundo"
 
 # Atalho de teclado para inserir operador de atribuição <-
 # Windows: Alt+ ou Alt-
 # macOS: Option+ ou Option-
 
-x == 2 # Aqui checamos se o valor de x é igual a 2, o resultado será um valor lógico (verdadeiro ou falso)
-x != 2 # Aqui checamos se o valor de x é diferente de 2, o resultado será um valor lógico (verdadeiro ou falso)
+x == 2 # Aqui perguntamos ao R se o valor de x é igual a 2,
+# o resultado será um valor lógico (verdadeiro ou falso)
 
-# Criar um vetor numérico com a função concatenar c()
+x != 2 # Aqui perguntamos ao R se o valor de x é diferente de 2,
+# o resultado será um valor lógico (verdadeiro ou falso)
+
+# Criar um vetor numérico com a função c()
 primos <- c(2, 3, 5, 7, 11, 13)
 primos
 
@@ -91,12 +104,19 @@ risco
 risco <- as.factor(risco)
 levels(risco)
 
+# Criar vetor de caracteres com ordem específica
+risco <- ordered(risco, 
+                 levels = c("baixo", "médio", "alto")) 
+levels(risco)
+
 # Matriz
 m <- matrix(1:6, nrow = 2, ncol = 3)
 m
 
 # Data frame
-df <- data.frame(col1 = 1:4, col2 = c(T, T, F, F))
+df <- data.frame(col1 = 1:4, 
+                 col2 = c("manga", "laranja", 
+                          "uva", "morango"))
 df
 
 # Lista
@@ -113,8 +133,7 @@ l
 
 #install.packages("tidyverse", dependencies = TRUE)
 #install.packages("writexl", dependencies = TRUE)
-#install.packages("dados")
-#install.packages("skimr")
+#install.packages("palmerpenguins")
 
 #### 04 Carregar os pacotes necessários ####
 
@@ -122,10 +141,20 @@ l
 # os pacotes que você vai usar na sua análise
 
 library(tidyverse) # Conjunto de pacotes, inclui o ggplot
-library(readxl) # Este pacote faz parte do Tidyverse, então já está instalado
-library(writexl) # Este pacote permite exportar dados do R para uma planilha de Excel
-library(dados) # Este pacote contém conjuntos de dados úteis para praticar
-library(skimr) # Este pacote cria uma tabela de resumo estatístico dos dados
+
+library(readxl) # Este pacote faz parte do Tidyverse,
+# então já está instalado
+
+library(writexl) # Este pacote permite exportar dados do R
+# para uma planilha de Excel
+
+library(tibble) # Este pacote faz parte do Tidyverse,
+# então já está instalado
+
+library(palmerpenguins) # Este pacote contém dados que vamos usar
+
+library(nycflights13) # Este pacote faz parte do dplyr que
+# vem com o Tidyverse, então já está instalado
 
 #### 05 Carregar dados que já foram limpos/transformados ####
 
@@ -138,86 +167,97 @@ library(skimr) # Este pacote cria uma tabela de resumo estatístico dos dados
 # Para facilitar o aprendizado e devido ao curso ser curto, vamos
 # começar pela visualização dos dados
 
-# Vamos dar uma olhada no data frame pinguins, que faz parte do pacote dados:
-pinguins
-# Dados aparecem no console:
+# Vamos dar uma olhada no data frame penguins,
+# que faz parte do pacote palmerpenguins:
+penguins
+
+# Dados aparecem no console como um tibble:
 # por padrão, mostra somente as 10 primeiras linhas da tabela
 
-# Pinguins contém um tibble de 344 linhas (observações) e 8 colunas (variáveis)
-# Apenas as seis primeiras colunas aparecem no console
+# Penguins contém um tibble de 344 linhas (observações)
+# e 8 colunas (variáveis)
+# Apenas as 6 primeiras colunas aparecem no console
 # Já podemos ver que alguns valores estão ausentes: NA
-# Em cinza, abaixo das linhas vemos que existem mais 334 linhas e mais 2 colunas
-# O nome e tipo de dados das duas colunas também é listado:
-# sexo <fatores> e ano <números inteiros>
+# Ao final do tibble vemos que existem mais 334 linhas
+# e mais 2 colunas
+# O nome e tipo de dados das 2 colunas também é listado:
+# sex <fatores> e year <números inteiros>
 
-# Um tibble é uma tipo de data frame: uma coleção tabular (formato de tabela) de
+# Um tibble é uma tipo de data frame:
+# uma coleção tabular (formato de tabela) de
 # variáveis (nas colunas) e observações (nas linhas)
 
-# Neste contexto, uma variável refere-se a um atributo de todos os pinguins,
-# e uma observação refere-se a todos os atributos de um único pinguim
+# Neste contexto, uma variável refere-se a um atributo
+# de todos os pinguins,
+# e uma observação refere-se a todos os atributos
+# de um único pinguim.
 
-# Para saber mais detalhes sobre o data frame, use a ajuda:
-?pinguins
+# Para saber mais detalhes sobre o data frame,
+# digite penguins na aba help.
 
 # Para ver a tabela inteira (abre em nova aba no painel editor de script):
-View(pinguins)
+View(penguins)
 
 # Fechar aba pinguins
-
-# Usando o pacote skmir, rapidamente vemos os tipos de variáveis numéricas
-# e categóricas no conjunto de dados pinguins
-skim(pinguins)
-# O resultado também mostra o número de valores ausentes (n_missing) e
-# distrubuição das variáveis e os pencentis
 
 
 #### 06 Gráfico de dispersão com o pacote ggplot2 ####
 
 # Primeira camada: o conjunto de dados a ser usado no gráfico
-ggplot(data = pinguins)
-# Cria um gráfico vazio porquê ainda não dissemos como fazer a visualização
+ggplot(data = penguins)
+# Cria um gráfico vazio porquê ainda não dissemos
+# como fazer a visualização
 
-# Vamos especificar quais variáveis devem ser mapeadas nos eixos x e y
-ggplot(data = pinguins,
-       mapping = aes(x = comprimento_nadadeira,
-                     y = massa_corporal))
-# Porém, ainda não definimos como representar as observações do data frame
-# em nosso gráfico.
+# Vamos checar os nomes da colunas no dataset penguins
+colnames(penguins)
 
-# Precisamos definir um geom: A geometria que um gráfico usa para representar
-# os dados. Mais detalhes sobre geoms nos materiais de apoio
+# Vamos especificar quais variáveis (colunas)
+# devem ser mapeadas nos eixos x e y
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, # comprimento da nadadeira em milímetros
+                     y = body_mass_g)) # massa corporal em gramas
 
-# A função geom_point() adiciona uma camada de pontos ao seu gráfico,
+# Porém, ainda não definimos como representar as
+# observações do data frame em nosso gráfico.
+
+# Precisamos definir um geom: A geometria que um gráfico
+# usa para representar os dados.
+
+# A função geom_point() adiciona uma camada de pontos
+# ao seu gráfico,
 # o que cria um gráfico de dispersão
-ggplot(data = pinguins,
-       mapping = aes(x = comprimento_nadadeira,
-                     y = massa_corporal)) +
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm,
+                     y = body_mass_g)) +
   geom_point()
 
-# Vemos que uma mensagem de aviso (warning message) apareceu no console
-# Observações que estão faltando/em branco e foram marcadas como NA foram removidas do gráfico
+# Vemos que uma mensagem de aviso (warning message) apareceu
+# no console. Observações que estão faltando/em branco
+# e foram marcadas como NA foram removidas do gráfico.
 
-# O gráfico aparece na aba de Plots, no painel output/saída
+# O gráfico aparece na aba de Plots, no painel de output/saída
 
 # Agora vamos adicionar atributos estéticos
-ggplot(data = pinguins,
-       mapping = aes(x = comprimento_nadadeira,
-                     y = massa_corporal,
-                     color = especie)) + # Mapear as espécies por cor
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm,
+                     y = body_mass_g,
+                     color = species)) + # Mapear as espécies por cor
   geom_point()
 
 # Mapear as espécies por cor e forma
-ggplot(data = pinguins,
-       mapping = aes(x = comprimento_nadadeira,
-                     y = massa_corporal,
-                     color = especie, shape = especie)) +
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm,
+                     y = body_mass_g,
+                     color = species,
+                     shape = species)) + # Mapear as espécies por formato do ponto
   geom_point()
 
 # Adicionar linha horizontal para valor de referência
-ggplot(data = pinguins,
-       mapping = aes(x = comprimento_nadadeira,
-                     y = massa_corporal,
-                     color = especie, shape = especie)) +
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm,
+                     y = body_mass_g,
+                     color = species,
+                     shape = species)) +
   geom_point() +
   geom_hline(yintercept = 4500)
 
@@ -227,44 +267,58 @@ ggplot(data = pinguins,
 #### 07 Gráfico de barras com o pacote ggplot2 ####
 
 # Vamos visualizar a distribuição de uma variável categórica
-ggplot(pinguins, aes(x = especie)) +
+ggplot(penguins,
+       aes(x = species)) +
   geom_bar()
 
 # Vamos ordenar os níveis da variável categórica
 # Para isso, é necessário transformar a variável em um fator
 # (como o R lida com dados categóricos) e, em seguida,
 # reordenar os níveis desse fator
-ggplot(pinguins, aes(x = fct_infreq(especie))) +
+ggplot(penguins,
+       aes(x = fct_infreq(species))) +
   geom_bar()
 
 # Visualizar a relação entre duas variáveis categóricas
-ggplot(pinguins, aes(x = ilha, fill = especie)) +
+ggplot(penguins,
+       aes(x = island,
+           fill = species)) +
   geom_bar()
 
 #### 08 Gráfico de boxplot ####
 
 # Distribuição da massa corporal por espécie
-ggplot(pinguins, aes(x = especie, y = massa_corporal)) +
+ggplot(penguins,
+       aes(x = species,
+           y = body_mass_g)) +
   geom_boxplot()
 
 #### 09 Gráfico de densidade ####
 
 # Distribuição da massa corporal por espécie
-ggplot(pinguins, aes(x = massa_corporal, color = especie)) +
+ggplot(penguins,
+       aes(x = body_mass_g,
+           color = species)) +
   geom_density(linewidth = 0.75)
 
 #### 10 Dividir o gráfico em facetas ####
 
-ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
-  facet_wrap(~ilha)
+ggplot(penguins,
+       aes(x = flipper_length_mm,
+           y = body_mass_g)) +
+  geom_point(aes(color = species, 
+                 shape = species)) +
+  facet_wrap(~island)
 
 #### 11 Customizar gráficos ####
 
 # Adicionar/mudar rótulos (labels) com a função labs()
-ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
-  facet_wrap(~ilha) +
+ggplot(penguins, 
+       aes(x = flipper_length_mm,
+           y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species)) +
+  facet_wrap(~island) +
   labs(x = "Comprimento da nadadeira em milímetros",
        y = "Massa corporal em gramas",
        color = "Espécie",
@@ -274,9 +328,12 @@ ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
        caption = "Dados da tabela pinguin, presente no pacote dados")
 
 # Centralizar título e sub-título do gráfico
-ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
-  facet_wrap(~ilha) +
+ggplot(penguins,
+       aes(x = flipper_length_mm,
+           y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species)) +
+  facet_wrap(~island) +
   labs(x = "Comprimento da nadadeira em milímetros",
        y = "Massa corporal em gramas",
        color = "Espécie",
@@ -288,9 +345,12 @@ ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
         plot.subtitle = element_text(hjust = 0.5)) # Centralizar sub-título
 
 # Mudar o tamanho e tipo de fonte
-ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
-  facet_wrap(~ilha) +
+ggplot(penguins,
+       aes(x = flipper_length_mm,
+           y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species)) +
+  facet_wrap(~island) +
   labs(x = "Comprimento da nadadeira em milímetros",
        y = "Massa corporal em gramas",
        color = "Espécie",
@@ -304,10 +364,13 @@ ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
                             family = "Arial")) # família da fonte
 
 # Mudar cores
-ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
+ggplot(penguins,
+       aes(x = flipper_length_mm, 
+           y = body_mass_g)) +
+  geom_point(aes(color = species, 
+                 shape = species)) +
   scale_color_manual(values = c("black", "#E427F5", "blue")) + # Cores podem ser especificadas através do nome em inglês ou do código HEX
-  facet_wrap(~ilha) +
+  facet_wrap(~island) +
   labs(x = "Comprimento da nadadeira em milímetros",
        y = "Massa corporal em gramas",
        color = "Espécie",
@@ -319,9 +382,12 @@ ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
         plot.subtitle = element_text(hjust = 0.5))
 
 # Mudar tema estético
-ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
-  facet_wrap(~ilha) +
+ggplot(penguins,
+       aes(x = flipper_length_mm,
+           y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species)) +
+  facet_wrap(~island) +
   labs(x = "Comprimento da nadadeira em milímetros",
        y = "Massa corporal em gramas",
        color = "Espécie",
@@ -338,9 +404,12 @@ ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
 #### 12 Exportar gráfico para arquivo de imagem PNG ####
 
 # Passar o gráfico para um objeto
-pinguins_dist <- ggplot(pinguins, aes(x = comprimento_nadadeira, y = massa_corporal)) +
-  geom_point(aes(color = especie, shape = especie)) +
-  facet_wrap(~ilha) +
+pinguins_dist <- ggplot(penguins, 
+                        aes(x = flipper_length_mm,
+                            y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species)) +
+  facet_wrap(~island) +
   labs(x = "Comprimento da nadadeira em milímetros",
        y = "Massa corporal em gramas",
        color = "Espécie",
@@ -360,7 +429,8 @@ ggsave("pinguins_distribuicao.png", # Nome do arquivo
        dpi = 300, # Defina a qualidade da imagem em pontos por polegada (dpi - dots per inch). 300 dpi é o mínimo de resolução para imprimir o gráfico com qualidade.
        limitsize = FALSE) # Diga à função ggsave() para não limitar o tamanho do arquivo ao salvar
 
-# Veja que o arquivo pinguins_distribuicao.png aparece na aba files/arquivos (caso você esteja no projeto)
+# Veja que o arquivo pinguins_distribuicao.png aparece
+# na aba files/arquivos (caso você esteja no projeto).
 
 #### 13 Importar dados de arquivo .csv para o R ####
 
@@ -379,7 +449,10 @@ ggsave("pinguins_distribuicao.png", # Nome do arquivo
 
 # Vamos usar o operador de atribuição para manter os dados no objeto 'estudantes'
 # Importar o arquivo .csv:
-estudantes <- read_csv("estudantes.csv") # O primeiro argumento é o caminho para o arquivo
+estudantes <- readr::read_csv("estudantes.csv") # O primeiro argumento é o caminho para o arquivo
+
+# o formato readr::read_csv() significa:
+# nome_do_pacote::nome_da_função
 
 # A mensagem no console mostra que essa tabela possui 6 linhas e 5 colunas
 # A vírgula foi usada para interpretar como os dados estão delimitados
@@ -398,7 +471,6 @@ View(estudantes)
 
 # Fechar aba estudantes
 
-skim(estudantes)
 
 #### 14 Importar dados de arquivo .xlsx para o R ####
 
@@ -409,11 +481,11 @@ skim(estudantes)
 # O arquivo vai aparecer na aba de arquivos/files no painel output/saída
 
 # Importe a planilha usando o pacote read_excel
-estudantes <- read_excel("estudantes.xlsx")
+estudantes <- readxl::read_excel("estudantes.xlsx")
 
 # Vamos dar uma olhada nos dados
 View(estudantes)
-skim(estudantes)
+
 estudantes
 
 #### 15 Organizar dados: renomear colunas ####
@@ -427,10 +499,12 @@ estudantes
 
 # Vamos usar snake_case para manter tudo consistente, usando o
 # argumento col_names da função read_excel()
-estudantes <- read_excel("estudantes.xlsx",
-                         col_names = c("estudante_id", "nome_completo",
-                                       "comida_favorita", "refeicao_plano", 
-                                       "idade"))
+estudantes <- readxl::read_excel("estudantes.xlsx",
+                                 col_names = c("estudante_id", 
+                                               "nome_completo",
+                                               "comida_favorita", 
+                                               "refeicao_plano", 
+                                               "idade"))
 
 # Vamos visualizar os dados novamente
 estudantes
@@ -439,11 +513,13 @@ View(estudantes)
 # O que era anteriormente a linha de cabeçalho passou a aparecer nos dados
 # como a primeira linha das observações
 # Você pode pular esta linha usando o argumento skip da função read_excel()
-estudantes <- read_excel("estudantes.xlsx",
-                         col_names = c("estudante_id", "nome_completo",
-                                       "comida_favorita", "refeicao_plano", 
-                                       "idade"),
-                         skip = 1) # Pula linhas na hora de importar a tabela
+estudantes <- readxl::read_excel("estudantes.xlsx",
+                                 col_names = c("estudante_id", 
+                                               "nome_completo",
+                                               "comida_favorita", 
+                                               "refeicao_plano",
+                                               "idade"),
+                                 skip = 1) # Pula linhas na hora de importar a tabela
 
 # Vamos visualizar os dados novamente
 estudantes
@@ -454,14 +530,19 @@ View(estudantes)
 # O argumento col_names permite que a gente passe um novo nome para as colunas
 # Podemos passar o argumento col_types para a função read_excel() e especificar
 # os tipos das colunas das variáveis que estamos importando.
-estudantes <- read_excel("estudantes.xlsx",
-                         col_names = c("estudante_id", "nome_completo",
-                                       "comida_favorita", "refeicao_plano", 
-                                       "idade"),
-                         skip = 1, 
-                         na = c("", "N/A"), # Determina quais valores devem ser considerados como ausentes
-                         col_types = c("numeric", "text",
-                                       "text", "text", "numeric"))
+estudantes <- readxl::read_excel("estudantes.xlsx",
+                                 col_names = c("estudante_id", 
+                                               "nome_completo",
+                                               "comida_favorita", 
+                                               "refeicao_plano", 
+                                               "idade"),
+                                 skip = 1, 
+                                 na = c("", "N/A"), # Determina quais valores devem ser considerados como ausentes
+                                 col_types = c("numeric", 
+                                               "text",
+                                               "text", 
+                                               "text", 
+                                               "numeric"))
 
 estudantes
 
@@ -504,13 +585,14 @@ estudantes$idade <- as.numeric(estudantes$idade)
 
 # Vamos ver os dados após a conversão
 estudantes
+View(estudantes)
 
 #### 16 Organizar dados: pivotar, exemplo simples ####
 
 # Vamos criar um conjunto de dados bem simples com a função tribble()
 # do pacote tibble (pertence ao tidyverse, então já foi instalada)
 # ps = "pressão sanguínea"
-df <- tribble(
+df <- tibble::tribble(
   ~id,  ~ps1, ~ps2,
   "A",  100,  120,
   "B",  140,  115,
@@ -527,9 +609,9 @@ df
 # Para obter essa forma, precisamos pivotar df para um formato mais longo:
 
 pressao_longo <- df |> # Cmd ou Ctrl Shift M é o atalho de teclado para o pipe nativo
-  pivot_longer(cols = ps1:ps2,
-               names_to = "medicao", # Etiquetas/nomes das colunas ps1 a ps2 para nova coluna chamada 'medicao'
-               values_to = "valor") # Valores das células das colunas ps1 a ps2 para nova coluna chamada 'valor'
+  tidyr::pivot_longer(cols = ps1:ps2,
+                      names_to = "medicao", # Etiquetas/nomes das colunas ps1 a ps2 para nova coluna chamada 'medicao'
+                      values_to = "valor") # Valores das células das colunas ps1 a ps2 para nova coluna chamada 'valor'
   
 # Vamos evitar acentos nos nomes das colunas
 # No exemplo acima, o pipe nativo passa os dados de df para a função pivot_longer()
@@ -538,7 +620,7 @@ pressao_longo <- df |> # Cmd ou Ctrl Shift M é o atalho de teclado para o pipe 
 # Veja que os dados agora estão em formato tidy longo
 pressao_longo
 
-#### 17 Organizar dados: pivotar para formato longo ####
+#### 17 Organizar dados: pivotar para formato longo, exemplo 1 ####
 
 # Exemplo 1: temos os dados nos nomes das colunas, tornando a tabela
 # muito larga horizontalmente.
@@ -556,8 +638,8 @@ billboard
 # é outra (a posicao).
 
 # Para transformar esses dados em tidy, vamos usar a função pivot_longer():
-billboard_tidy <- billboard |>
-  pivot_longer(
+billboard_tidy <- billboard |> # Este é o pipe
+  tidyr::pivot_longer(
     cols = starts_with("wk"), # seleciona todas as colunas que começam com as letras wk
     names_to = "week", # nomeia a nova coluna que vai conter a informação das semanas como week
     values_to = "rank") # nomeia a nova coluna que vai conter a informação da posição das músicas em rank
@@ -608,54 +690,83 @@ ggplot(data = top10_artists,
   labs(x = "Artista",
        y = "Total de aparições")
 
-# Exemplo 2: como pivotar para formato longo quando temos muitas
-# variáveis nos nomes de colunas:
+#### 18 Organizar dados: pivotar para formato longo, exemplo 2 ####
 
-# Vamos usar o conjunto de dados dados_oms, que é a fonte da tabela1
-?dados_oms # Leia com atenção a descrição das colunas
+# Como pivotar para formato longo quando temos muitas
+# variáveis nos nomes das colunas:
 
-View(dados_oms)
-skim(dados_oms)
-dados_oms
+# Vamos usar o dataset who2 que vem com o pacote tidyr
+?who2 # Leia com atenção a descrição das colunas
+# (não confunda com o dataset who)
 
-# novos - descrevem se os casos são novos. Combinado com o diagnóstico vai indicar se é uma nova recaída
-# fpp/fpn/ep/recaida - descrevem o método utilizado para o diagnóstico
-# h/m é o gênero - genero (codificado como uma variável binária nesse conjunto de dados)
-# 014/1524/2534/3544/4554/5564/65 é o intervalo de idade - idade (014 representa 0-14, por exemplo).
+View(who2)
+who2
+colnames(who2)
 
-colnames(dados_oms)
-View(dados_oms)
+# O conjunto de dados who2 foi coletado pela Organização Mundial
+# da Saúde e contém informações sobre diagnósticos de
+# tuberculose. Há duas colunas que já são variáveis
+# e são fáceis de interpretar: country (país) e year (ano).
+# Elas são seguidas por 56 colunas como:
+# sp_m_014, sn_m_014, ep_m_4554 e rel_m_3544
 
-dados_oms_tidy <- dados_oms |> 
+# Podemos perceber um padrão aqui: cada nome de coluna é
+# composto por três partes separadas por _
+
+# A primeira parte, rel/sn/sp/ep, descreve o método usado
+# para o diagnóstico:
+# rel = recidiva, sn = esfregaço pulmonar negativo,
+# sp = esfregaço pulmonar positivo, ep = extrapulmonar;
+
+# A segunda parte, m/f, é o sexo (codificado como uma
+# variável binária neste conjunto de dados):
+# f = female, m = male;
+
+# E a terceira parte, 014/1524/2534/3544/4554/5564/65,
+# é a faixa etária:
+# 014 = 0-14 anos de idade, 1524 = 15-24 anos,
+# 2534 = 25-34 anos, 3544 = 35-44 anos de idade,
+# 4554 = 45-54 anos, 5564 = 55-64 anos, 65 = 65 anos ou mais
+
+# Neste caso, temos seis informações registradas no who2:
+# (1) o país e (2) o ano (já em colunas);
+# (3) o método de diagnóstico, (4) a categoria de sexo e
+# (5) a categoria de faixa etária
+# (1 a 5 contidas nos nomes das outras colunas);
+# e (6) a contagem de pacientes nessa categoria
+# (valores das células).
+
+# Para organizar essas seis informações em
+# seis colunas separadas, usamos pivot_longer()
+# com um vetor de nomes de colunas para names_to
+# e um vetor de nomes de colunas para names_sep
+# dividindo os nomes das variáveis originais em partes
+# para names_sep,
+# bem como um vetor de nomes de colunas para values_to:
+who2 |> 
   pivot_longer(
-    cols = !c(pais:ano), # Não inclua as colunas de 'pais' (país) até 'ano'
-    names_to = c("diagnostico", "genero", "idade"),
-    names_pattern = "novos_(.*)_(.)(.*)", # Aqui estamos usando expressões regulares (regular expressions)
-    values_to = "total")
+    cols = !(country:year), # o ! exclui as colunas country e year, já que não precisamos pivotá-las
+    names_to = c("diagnosis", "gender", "age"), 
+    names_sep = "_", # usa o símbolo _ como separdor
+    values_to = "count"
+  ) -> who2_pivot
 
-# No argumento names_pattern acima, a expressão regular tem 4 grupos
-# que correspodem ao padrão do nome das colunas: novos_fpp_h014
-# Grupo 1: Precisa começar com "novos_"
-# Grupo 2: (.*)_ significa quaisquer caracteres repetidos múltiplas vezes e segudos de um underscore/underline (por exemplo: fpp_, fpn_)
-# Grupo 3: (.) significa qualquer caractere que aparece somente uma vez (por exemplo: h, m)
-# Grupo 4: (.*) significa quaisquer caracteres repetidos múltiplas vezes (por exemplo: 014, 1524)
+View(who2_pivot) # Veja o resultado da pivotagem longa
 
-# Leia mais sobre expressões regulares (regular expressions) aqui:
-# https://pt.r4ds.hadley.nz/regexps.html
+View(who2) # Compare com a tabela original
 
-View(dados_oms_tidy)
-skim(dados_oms_tidy)
-dados_oms_tidy
-
-#### 18 Organizar dados: pivotar para formato largo ####
+#### 19 Organizar dados: pivotar para formato largo ####
 
 # Quando precisamos de pacotes que não usam o formato tidy,
 # muitas vezes vamos precisar transformar uma tabela de dados
-# para o formato longo (horizontalmente)
+# para o formato largo (horizontalmente)
 
-# Vamos usar o conjunto de dados do Centers of Medicare and Medicaid (USA) 
-# que coleta dados sobre as experiências dos pacientes
+# Vamos usar o conjunto de dados do Centers of Medicare
+# and Medicaid (USA) que coleta dados sobre as experiências
+# dos pacientes nos EUA (faz parte to pacote tidyr)
+?cms_patient_experience # abre a ajuda
 cms_patient_experience
+View(cms_patient_experience)
 
 # Para ver o conjunto único de valores usamos a função distinct()
 cms_patient_experience |> 
@@ -665,18 +776,11 @@ cms_patient_experience |>
 cms_patient_experience |> 
   pivot_wider(
     names_from = measure_cd,
-    values_from = prf_rate)
+    values_from = prf_rate) -> cms_pat_exp_pivot
 
+View(cms_pat_exp_pivot) # veja o resultado da pivotagem larga
 
-#### 19 Transformar dados: parte 1 ####
-
-# Vamos usar um conjunto de dados do pacote dados: vôos que partiram de Nova York em 2013
-?voos
-voos
-View(voos)
-
-# dttm é do tipo date-time (data e hora)
-# As operações possíveis sobre uma coluna dependem muito do seu “tipo”
+#### 20 Transformar dados: parte 1 ####
 
 # Notas sobre o pacote dplyr:
 # 1) O primeiro argumento é sempre um data frame
@@ -684,62 +788,83 @@ View(voos)
 # utilizando o nome das variáveis (sem aspas, mesmo sendo texto)
 # 3) A saída/resultado é sempre um novo data frame
 
-# Filtrar somente os voos que saíram atrasados com mais de 120 minutos
-voos |> 
-  filter(atraso_saida > 120)
+# Vamos usar um conjunto de dados do pacote nycflights13
+# São dados de vôos que partiram de aeroportos em Nova York
+# no ano de 2013
+?flights
+View(flights)
+
+colnames(flights)
+
+# Filtrar somente os voos que saíram atrasados
+# com mais de 120 minutos
+flights |> 
+  filter(dep_delay > 120)
 
 # Filtrar somente os voos que partiram em janeiro ou fevereiro
-voos |> 
-  filter(mes %in% c(1, 2)) |> # filter atua nas linhas
+flights |> 
+  filter(month %in% c(1, 2)) |> # filter atua nas linhas
   View()
 
-# voos que atrasaram mais de 120 minutos no primeiro trimestre do ano
-atraso_trimestre_1 <- dplyr::filter(voos,
-                                    atraso_saida >= 120,
-                                    mes %in% c(1, 2, 3))
+# voos que atrasaram mais de 120 minutos no primeiro
+# trimestre do ano
+atraso_trimestre_1 <- dplyr::filter(flights,
+                                    dep_delay >= 120,
+                                    month %in% c(1, 2, 3))
 
 
 View(atraso_trimestre_1)
 
-# Ordene todos os voos no data frame pela coluna atraso_saida (maior para menor)
-voos |> 
-  arrange(desc(atraso_saida)) 
+# Ordene todos os voos no data frame pela
+# coluna atraso_saida (maior para menor)
+flights |> 
+  arrange(desc(dep_delay)) 
 
 # Achar todos os pares únicos de origens e destinos
-voos |> 
-  distinct(origem, destino)
+flights |> 
+  distinct(origin, dest)
 
-# Manter todas as colunas quando procurar todos os pares únicos de origens e destinos
-voos |> 
-  distinct(origem, destino, .keep_all = TRUE) |> 
+# Manter todas as colunas quando procurar todos os
+# pares únicos de origens e destinos
+flights |> 
+  distinct(origin, dest, .keep_all = TRUE) |> 
   View()
 
-# Contar número total de voos que partiram da origem x e chegaram ao destino y
-voos |>
-  count(origem, destino, sort = TRUE)
+# Contar número total de voos que partiram da
+# origem X e chegaram ao destino Y
+flights |>
+  count(origin, dest, sort = TRUE)
 # A nova coluna "n" contém o resultado da contagem
 
 # Selecionar somente as colunas ano, mês e dia
-voos |> 
-  select(ano, mes, dia) # select atua nas colunas
+flights |> 
+  select(year, month, day) # select atua nas colunas
 
-# Vamos usar mais um conjunto de dados do pacote dados:
-# tabela1: Registros de tuberculose da Organização Mundial da Saúde (primeira variante)
+# Top 10 destinos na tabela flights
+flights |>
+  count(dest, sort = TRUE) |>
+  head(10)
+
+
+# Vamos usar mais um conjunto de dados do pacote tidyr:
+# table1: Registros de tuberculose da Organização Mundial da
+# Saúde (primeira variante)
 # Veja mais informações usando a ajuda:
-?tabela1
+?table1
 
 # Vamos ver os dados
-View(tabela1)
-skim(tabela1)
-tabela1
-# Os dados da tabela1 serão muito mais fáceis de transformar dentro do tidyverse
-# porque já estão organizados no no formato tidy
+View(table1)
+table1
+# Os dados da table1 serão muito mais fáceis de
+# transformar dentro do tidyverse,
+# porque já estão organizados no formato tidy
 
-# Calcular a taxa de incidência de tuberculose por 100.000 pessoas
-# e criar uma coluna categorizando em incidência alta ou baixa
-tabela1 |> 
+# Calcular a taxa de incidência de tuberculose a cada 
+# 100.000 pessoas e criar uma coluna categorizando
+# em incidência alta ou baixa
+table1 |> 
   dplyr::mutate(taxa = # nome da nova coluna
-                  casos / populacao * 100000) |> # Calcula a incidência (não use separadores no número inteiro)
+                  cases / population * 100000) |> # Calcula a incidência (não use separadores no número inteiro)
   dplyr::mutate(incidencia = # nome da nova coluna
                   case_when(taxa < 40 ~ "baixa", # Se o valor da variável taxa for menor do que 40, use o texto "baixa"
                             taxa > 40 ~ "alta", # # Se o valor da variável taxa for maior do que 40, use o texto "alta"
@@ -747,40 +872,43 @@ tabela1 |>
 # A função mutate() do pacote dplyr sempre vai criar uma nova coluna
 
 # Visualizar mudanças ao longo do tempo
-ggplot(tabela1, aes(x = ano, y = casos)) +
-  geom_line(aes(group = pais), color = "grey50") +
-  geom_point(aes(color = pais, shape = pais)) +
+ggplot(table1, aes(x = year, 
+                   y = cases)) +
+  geom_line(aes(group = country), 
+            color = "grey50") +
+  geom_point(aes(color = country, 
+                 shape = country)) +
   scale_x_continuous(breaks = c(1999, 2000)) # quebras (breaks) no eixo-x em 1999 e 2000
 
 # Calcular o total de casos de tuberculose por ano
-tabela1 |> 
-  group_by(ano) |> 
-  summarize(total_casos = sum(casos)) # a função sum() faz a adição doa valores
+table1 |> 
+  group_by(year) |> 
+  summarize(total_casos = sum(cases)) # a função sum() faz a adição doa valores
 
 # Lembrete: para guardar o resultado em um objeto/variável
 # use o operador de atribuição
-total_TB_ano <- tabela1 |> 
-  group_by(ano) |> 
-  summarize(casos_totais = sum(casos))
+total_TB_ano <- table1 |> 
+  group_by(year) |> 
+  summarize(casos_totais = sum(cases))
 
 total_TB_ano
 
-#### 20 Transformar dados: parte 2 ####
+#### 21 Transformar dados: parte 2 ####
 
-# Vamos fazer uniões entre tabelas
+# Vamos fazer uniões entre tabelas do pacote nycflights13
 
 # tibble 1
-companhias_aereas
-View(companhias_aereas)
+?flights
+View(flights)
+
 # tibble 2
-aeroportos
-View(aeroportos)
+?airlines
+View(airlines)
+
 # tibble 3
-avioes
-View(avioes)
-# tibble 4
-clima
-View(clima)
+?planes
+View(planes)
+
 
 ### Uniões de mutação (Mutating joins):
 # Uma união de mutação (mutating join),
@@ -788,34 +916,53 @@ View(clima)
 # combina as observações por suas chaves e depois copia as variáveis
 # de um data frame para outro
 
-# Selecionar apenas algumas colunas de voos para reduzir a complexidade
-voos2 <- voos |> 
-  select(ano, data_hora, origem, destino, cauda, companhia_aerea)
-voos2
+# Selecionar apenas algumas colunas de flights
+# para reduzir a complexidade
+flights2 <- flights |> 
+  dplyr::select(year, time_hour, origin, dest, tailnum, carrier)
 
-# Left join
-voos2 |>
-  left_join(companhias_aereas)
+flights2
+View(flights2)
 
-# O resultado sempre terá as mesmas linhas de x (nesse caso, voos2).
+colnames(flights2) # Listar nomes das columnas em flights2
+colnames(airlines) # Listar nomes das columnas em airlines
+
+# Unir as tabelas flights 2 e airlines usando a coluna
+# carrier como chave de união
+flights2 |> 
+  left_join(airlines, join_by(carrier)) 
+
+# O resultado sempre terá as mesmas linhas da primeira tabela
+# (nesse caso, flights2).
 # O principal uso da função left_join() é adicionar metadados
 # adicionais. Neste exemplo, adicionamos o
-# nome completo da companhia aérea aos dados voos2
+# nome completo da companhia aérea aos dados flights2
 
-# verificar se há valores ausentes (missing values)
-voos2 |> 
-  filter(is.na(cauda))
+# Verificar se há valores ausentes (missing values)
+flights2 |> 
+  filter(is.na(tailnum)) |> 
+  View()
 
+# Quando left_join() não encontra uma correspondência para
+# uma linha em X, ela preenche as novas variáveis com valores ausentes. Por exemplo,
+# Não há informações sobre o avião com número de cauda N3ALAA, então o
+# tipo, motores e assentos estarão ausentes:
+flights2 |> 
+  filter(tailnum == "N3ALAA") |> 
+  left_join(planes |> select(tailnum, type, engines, seats)) |> 
+  View()
 
-#### 21 Exportar dados (organizados e transformados) para arquivo CSV ou Excel ####
+#### 22 Exportar dados (organizados e transformados) para arquivo CSV ou Excel ####
 
 total_TB_ano
 
 # Exportar como arquivo .csv
-write_csv(total_TB_ano, "total_TB_ano.csv")
+readr::write_csv(total_TB_ano, 
+                 "total_TB_ano.csv")
 
 # Exportar como arquivo de Excel
-write_xlsx(total_TB_ano, "total_TB_ano.xlsx")
+writexl::write_xlsx(total_TB_ano,
+                    "total_TB_ano.xlsx")
 
 
 
